@@ -1,16 +1,18 @@
 version: '3'
 services:
-  converter-service:
-    build: ./converter-service
-    volumes:
-      - ./converter-service:/usr/src/app
-    ports:
-      - 3001:3001
-  converter-webpage:
-    build: ./converter-webpage
-    volumes:
-      - ./converter-webpage:/usr/src/app:rw
-    ports:
-      - 3000:3000
-    depends_on:
-      - converter-service
+    converter-service:
+        build: 
+            context: ./converter-service
+        volumes:
+            - ./converter-service:/usr/src/app
+        ports:
+            - 3001:3001
+    converter-webpage:
+        build: 
+            context: ./converter-webpage
+        volumes:
+            - ./converter-webpage:/usr/src/app:rw
+        ports:
+            - 3000:3000
+        depends_on:
+            - converter-service
