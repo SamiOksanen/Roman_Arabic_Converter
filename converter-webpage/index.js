@@ -1,41 +1,24 @@
-import React, {Component} from 'react';
+import React, { Component, useState } from 'react';
 import ReactDOM from 'react-dom';
 
-class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            roman: '',
-            arabic: ''
-        }
-    }
+function App() {
+    const [value, setValue] = useState({ roman: '', arabic: '' })
 
-    getArabic(e) {
-        console.log(e);
-        let roman = e.target.value;
-        if (roman) {
-            this.setState({
-                roman: roman
+    function getArabic(e) {
+        let newRoman = e.target.value;
+        fetch('http://localhost:3001/convert?roman=' + newRoman)
+            .then(res => res.text())
+            .then(text => {
+                setValue({ roman: newRoman, arabic: text });
             });
-            fetch('http://localhost:3001/convert?roman=' + roman)
-                .then(res => res.text())
-                .then(text => {
-                    this.setState({
-                        arabic: text
-                    })
-                });
-        }
     }
 
-
-    render() {
-        return (
-            <div>
-                <p>Roman: <input name="Roman" value={this.state.roman} onChange={e => this.getArabic(e)}/></p>
-                <p>Arabic: <input name="Arabic" readOnly value={this.state.arabic}/></p>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <p>Roman numeral: <input name="Roman" value={value.roman} onChange={e => getArabic(e)} /></p>
+            <p>Arabic number: <input name="Arabic" readOnly value={value.arabic} /></p>
+        </div>
+    );
 }
 
 ReactDOM.render(<App />, document.getElementById('container'));
