@@ -5,6 +5,7 @@ services:
             context: ./converter-service
         volumes:
             - ./converter-service:/usr/src/app
+            - /usr/src/app/node_modules
         ports:
             - 3001:3001
     converter-webpage:
@@ -12,6 +13,7 @@ services:
             context: ./converter-webpage
         volumes:
             - ./converter-webpage:/usr/src/app:rw
+            - /usr/src/app/node_modules
         ports:
             - 3000:3000
         depends_on:

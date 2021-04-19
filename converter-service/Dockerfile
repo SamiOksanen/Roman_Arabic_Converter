@@ -1,6 +1,8 @@
-FROM node:12
+FROM node:14
+
 WORKDIR /usr/src/app
-COPY package.json ./
+COPY package*.json ./
 RUN npm i
-COPY . ./
+COPY . .
+
 CMD ["npm", "start"]

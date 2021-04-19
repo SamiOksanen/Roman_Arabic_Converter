@@ -1,11 +1,8 @@
-FROM node:12
-
-WORKDIR /tmp
-COPY package.json /tmp/
-RUN npm i
+FROM node:14
 
 WORKDIR /usr/src/app
-COPY . /usr/src/app/
-RUN cp -a /tmp/node_modules /usr/src/app/
+COPY package*.json ./
+RUN npm i
+COPY . .
 
 CMD [ "npm", "run", "start" ]
